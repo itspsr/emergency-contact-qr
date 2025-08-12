@@ -34,15 +34,33 @@
     }
 
     /* Heading */
+    h1 {
+      text-align: center;
+      font-size: 4rem;
+      margin-bottom: 20px;
+      color: #00fff7;
+      text-shadow:
+        0 0 15px #00fff7;
+    }
+
     h2 {
       text-align: center;
-      font-size: 3.5rem;
-      margin-bottom: 40px;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
       color: #00ffe7;
       text-shadow:
         0 0 10px #00ffe7,
         0 0 20px #00ffe7,
         0 0 30px #00ffe7;
+    }
+
+    /* Paragraph */
+    p {
+      text-align: center;
+      font-size: 1.4rem;
+      max-width: 700px;
+      margin: 0 auto 40px auto;
+      color: #00ffe7;
     }
 
     /* Labels */
@@ -71,6 +89,7 @@
         0 0 20px #00fff7;
       transition: background 0.3s ease;
       font-family: 'Orbitron', monospace;
+      margin-bottom: 20px;
     }
 
     input::placeholder {
@@ -89,7 +108,7 @@
 
     /* Buttons */
     button {
-      margin-top: 20px;
+      margin-top: 10px;
       padding: 15px 30px;
       font-size: 1.4rem;
       font-weight: 700;
@@ -123,6 +142,9 @@
       box-shadow: 0 0 20px #00fff7aa;
       border-radius: 20px;
       overflow: hidden;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     #contacts-list th, #contacts-list td {
@@ -209,7 +231,7 @@
 
     /* Relation text */
     .qrcode-card div:nth-child(2) {
-      font-size: 1.1rem;
+      font-size: 14px;
       margin-bottom: 20px;
       color: #00ffdacc;
       font-style: italic;
@@ -273,19 +295,25 @@
   </style>
 </head>
 <body>
-  <h2>Emergency Contact QR Code Generator</h2>
+  <h1>Emergency Contact QR Code Generator</h1>
 
-  <label for="name">Contact Name (optional):</label>
-  <input type="text" id="name" placeholder="John Doe" />
+  <p>
+    Create and download free emergency contact QR codes quickly and easily. Share your emergency phone numbers with family, friends, or first responders using these scannable codes.
+  </p>
 
-  <label for="phone">Phone Number (required):</label>
-  <input type="tel" id="phone" placeholder="+911234567890" />
+  <section style="max-width:700px; margin:auto;">
+    <label for="name">Contact Name (optional):</label>
+    <input type="text" id="name" placeholder="John Doe" />
 
-  <label for="relation">Relationship (optional):</label>
-  <input type="text" id="relation" placeholder="Brother, Doctor, etc." />
+    <label for="phone">Phone Number (required):</label>
+    <input type="tel" id="phone" placeholder="+911234567890" />
 
-  <button onclick="addContact()">Add Contact</button>
-  <button onclick="generateAllQRCodes()" style="margin-left: 10px;">Generate All QR Codes</button>
+    <label for="relation">Relationship (optional):</label>
+    <input type="text" id="relation" placeholder="Brother, Doctor, etc." />
+
+    <button onclick="addContact()">Add Contact</button>
+    <button onclick="generateAllQRCodes()" style="margin-left: 10px;">Generate All QR Codes</button>
+  </section>
 
   <table id="contacts-list" style="display:none;">
     <thead>
@@ -300,6 +328,16 @@
   </table>
 
   <div id="qrcodes"></div>
+
+  <section style="max-width:700px; margin:60px auto 40px auto; color:#00ffe7;">
+    <h2>Why Use Emergency Contact QR Codes?</h2>
+    <ul style="font-size:1.2rem; line-height:1.6; list-style-type: disc; padding-left: 20px;">
+      <li>Instantly share emergency phone numbers with medical personnel and helpers.</li>
+      <li>Keep important contacts accessible even if you are unable to speak.</li>
+      <li>Easy to generate, save, and carry on your phone or printed card.</li>
+      <li>Completely free and simple to use — no signup required.</li>
+    </ul>
+  </section>
 
   <script>
     let contacts = [];
