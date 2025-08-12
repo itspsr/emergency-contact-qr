@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Emergency Contact QR Code Generator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      background: #f7f7f7;
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #contacts-list {
+      margin-top: 20px;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    #contacts-list th, #contacts-list td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    #qrcodes {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+    .qrcode-card {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+      text-align: center;
+      width: 220px;
+    }
+    .contact-name {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .download-btn {
+      margin-top: 10px;
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Emergency Contact QR Code Generator</h2>
+
+  <label for="name">Contact Name (optional):</label>
+  <input type="text" id="name" placeholder="John Doe" />
+
+  <label for="phone">Phone Number (required):</label>
+  <input type="tel" id="phone" placeholder="+911234567890" />
+
+  <label for="relation">Relationship (optional):</label>
+  <input type="text" id="relation" placeholder="Brother, Doctor, etc." />
+
+  <button onclick="addContact()">Add Contact</button>
+  <button onclick="generateAllQRCodes()" style="margin-left: 10px;">Generate All QR Codes</button>
+
+  <table id="contacts-list" style="display:none;">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Phone Number</th>
+        <th>Relationship</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody id="contacts-tbody"></tbody>
+  </table>
+
+  <div id="qrcodes"></div>
+
+  <script>
+    let contacts = [];
+
+    function addContact() {
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const relation = document.getElementById('relation').value.trim();
+
+      if (!phone) {
+        alert('Phone number is required.');
+        return;
+      }
+      if (!phone.match(/^\+?\d{7,15}$/)) {
+        alert('Please enter a valid phone number with country code, e.g. +911234567890');
+        return;
+      }
+
+      contacts.push({ name, phone, relation });
+      document.getElementById('name').value = '';
+      document.getElementById('phone').value = '';
+      document.getElementById('relation').value = '';
+
+      updateContactsTable();
+    }
+
+    function updateContactsTable() {
+      const tbody = document.getElementById('contacts-tbody');
+      tbody.innerHTML = '';
+      if (contacts.length === 0) {
+        document.getElementById('contacts-list').style.display = 'none';
+        document.getElementById('qrcodes').innerHTML = '';
+        return;
+      }
+      document.getElementById('contacts-list').style.display = 'table';
+      contacts.forEach((contact, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${contact.name || '-'}</td>
+          <td>${contact.phone}</td>
+          <td>${contact.relation || '-'}</td>
+          <td><button onclick="removeContact(${index})">Remove</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('qrcodes').innerHTML = '';
+    }
+
+    function removeContact(index) {
+      contacts.splice(index, 1);
+      updateContactsTable();
+    }
+
+    function generateAllQRCodes() {
+      const container = document.getElementById('qrcodes');
+      container.innerHTML = '';
+
+      if (contacts.length === 0) {
+        alert('Add at least one contact first!');
+        return;
+      }
+
+      contacts.forEach(contact => {
+        // Create card container
+        const card = document.createElement('div');
+        card.className = 'qrcode-card';
+
+        // Contact info text
+        const nameText = document.createElement('div');
+        nameText.className = 'contact-name';
+        nameText.textContent = contact.name || 'Unnamed Contact';
+
+        const relationText = document.createElement('div');
+        relationText.style.fontSize = '14px';
+        relationText.style.marginBottom = '10px';
+        relationText.textContent = contact.relation ? `Relation: ${contact.relation}` : '';
+
+        card.appendChild(nameText);
+        card.appendChild(relationText);
+
+        // QR code container
+        const qrDiv = document.createElement('div');
+        card.appendChild(qrDiv);
+
+        // Generate QR code for tel:
+        new QRCode(qrDiv, {
+          text: `tel:${contact.phone}`,
+          width: 180,
+          height: 180,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Download button
+        const downloadBtn = document.createElement('button');
+        downloadBtn.className = 'download-btn';
+        downloadBtn.textContent = 'Download QR Code';
+        downloadBtn.onclick = () => downloadQRCode(qrDiv, contact.name || 'contact');
+
+        card.appendChild(downloadBtn);
+
+        container.appendChild(card);
+      });
+    }
+
+    function downloadQRCode(qrDiv, filename) {
+      // QRCode.js creates a <div> containing a <canvas>
+      // Grab canvas element inside qrDiv
+      const canvas = qrDiv.querySelector('canvas');
+      if (!canvas) {
+        alert('QR code canvas not found!');
+        return;
+      }
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = `${filename}_QRCode.png`;
+      link.click();
+    }
+  </script>
+</body>
+</html>
