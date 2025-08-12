@@ -5,69 +5,266 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Emergency Contact QR Code Generator</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- Google Fonts: Orbitron -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 600px;
-      margin: auto;
-      background: #f7f7f7;
+    /* Reset and base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
+
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: 'Orbitron', sans-serif;
+      color: #00fff7;
+      padding: 40px 80px;
+      max-width: 1200px;
+      margin: auto;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Heading */
     h2 {
       text-align: center;
+      font-size: 3.5rem;
+      margin-bottom: 40px;
+      color: #00ffe7;
+      text-shadow:
+        0 0 10px #00ffe7,
+        0 0 20px #00ffe7,
+        0 0 30px #00ffe7;
     }
+
+    /* Labels */
     label {
-      font-weight: bold;
       display: block;
-      margin-top: 15px;
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #00ffc8;
+      text-shadow: 0 0 5px #00ffc8;
     }
+
+    /* Inputs */
     input {
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      box-sizing: border-box;
-      font-size: 16px;
+      padding: 15px 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 12px;
+      background: rgba(0, 255, 250, 0.1);
+      color: #00fff7;
+      box-shadow:
+        inset 0 0 8px #00fff7,
+        0 0 20px #00fff7;
+      transition: background 0.3s ease;
+      font-family: 'Orbitron', monospace;
     }
+
+    input::placeholder {
+      color: #00ffeaaa;
+      font-style: italic;
+    }
+
+    input:focus {
+      outline: none;
+      background: rgba(0, 255, 250, 0.2);
+      box-shadow:
+        inset 0 0 12px #00fff7,
+        0 0 30px #00fff7,
+        0 0 40px #00fff7;
+    }
+
+    /* Buttons */
     button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    #contacts-list {
       margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #000;
+      background: #00fff7;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow:
+        0 0 10px #00fff7,
+        0 0 30px #00fff7,
+        0 0 40px #00fff7;
+      transition: background 0.3s ease, color 0.3s ease;
+      font-family: 'Orbitron', monospace;
+    }
+
+    button:hover {
+      background: #00d0d0;
+      color: #fff;
+      box-shadow:
+        0 0 15px #00fff7,
+        0 0 40px #00fff7,
+        0 0 60px #00fff7;
+    }
+
+    /* Contacts list table */
+    #contacts-list {
+      margin-top: 40px;
       border-collapse: collapse;
       width: 100%;
+      box-shadow: 0 0 20px #00fff7aa;
+      border-radius: 20px;
+      overflow: hidden;
     }
+
     #contacts-list th, #contacts-list td {
-      border: 1px solid #ccc;
-      padding: 8px;
+      padding: 18px 24px;
+      border-bottom: 1px solid #00fff720;
       text-align: left;
+      font-size: 1.2rem;
     }
+
+    #contacts-list thead {
+      background: #005555cc;
+      color: #00fff7;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    #contacts-list tbody tr:hover {
+      background: #00fff733;
+    }
+
+    /* Remove button in table */
+    #contacts-list button {
+      padding: 8px 14px;
+      font-size: 1rem;
+      border-radius: 12px;
+      background: #ff0044;
+      color: #fff;
+      box-shadow:
+        0 0 8px #ff0044,
+        0 0 18px #ff0044;
+      border: none;
+      cursor: pointer;
+      font-family: 'Orbitron', monospace;
+      transition: background 0.3s ease;
+    }
+
+    #contacts-list button:hover {
+      background: #cc0033;
+      box-shadow:
+        0 0 12px #ff0066,
+        0 0 24px #ff0066;
+    }
+
+    /* QR Codes container */
     #qrcodes {
-      margin-top: 30px;
+      margin-top: 50px;
       display: flex;
       flex-wrap: wrap;
-      gap: 30px;
+      gap: 40px;
       justify-content: center;
     }
+
+    /* Each QR code card */
     .qrcode-card {
-      background: white;
-      border-radius: 8px;
-      padding: 15px;
-      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+      background: #001f22;
+      border-radius: 24px;
+      padding: 25px 20px 30px;
+      box-shadow:
+        0 0 30px #00fff7cc,
+        inset 0 0 20px #00fff799;
       text-align: center;
-      width: 220px;
+      width: 260px;
+      transition: transform 0.3s ease;
+      cursor: default;
     }
+
+    .qrcode-card:hover {
+      transform: scale(1.05);
+      box-shadow:
+        0 0 50px #00fff7ee,
+        inset 0 0 30px #00fff7bb;
+    }
+
+    /* Contact name inside card */
     .contact-name {
-      font-weight: bold;
-      margin-bottom: 8px;
+      font-weight: 900;
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+      color: #00fff7;
+      text-shadow:
+        0 0 12px #00fff7,
+        0 0 30px #00fff7;
     }
+
+    /* Relation text */
+    .qrcode-card div:nth-child(2) {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      color: #00ffdacc;
+      font-style: italic;
+      text-shadow: 0 0 8px #00ffdacc;
+    }
+
+    /* Download button inside QR code card */
     .download-btn {
-      margin-top: 10px;
-      padding: 6px 12px;
-      font-size: 14px;
+      margin-top: 12px;
+      padding: 10px 20px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 30px;
+      border: none;
+      background: #00fff7;
+      color: #000;
       cursor: pointer;
+      box-shadow:
+        0 0 12px #00fff7,
+        0 0 24px #00fff7;
+      transition: background 0.3s ease, color 0.3s ease;
+      font-family: 'Orbitron', monospace;
+    }
+
+    .download-btn:hover {
+      background: #00d0d0;
+      color: #fff;
+      box-shadow:
+        0 0 18px #00fff7,
+        0 0 36px #00fff7;
+    }
+
+    /* Scrollbar styling for modern browsers */
+    body::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    body::-webkit-scrollbar-track {
+      background: #0f2027;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background: #00fff7;
+      border-radius: 20px;
+      box-shadow: inset 0 0 6px #00fff7;
+    }
+
+    /* Responsive for smaller screens */
+    @media (max-width: 700px) {
+      body {
+        padding: 20px 30px;
+        max-width: 100%;
+      }
+      #qrcodes {
+        gap: 20px;
+      }
+      .qrcode-card {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -188,8 +385,8 @@
           text: `tel:${contact.phone}`,
           width: 180,
           height: 180,
-          colorDark: "#000000",
-          colorLight: "#ffffff",
+          colorDark: "#00fff7",
+          colorLight: "#001f22",
           correctLevel: QRCode.CorrectLevel.H
         });
 
