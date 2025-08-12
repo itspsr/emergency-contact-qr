@@ -1,1 +1,0 @@
-# emergency-contact-qr
