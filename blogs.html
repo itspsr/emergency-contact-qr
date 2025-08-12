@@ -3,32 +3,140 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Emergency Contact QR - First Blog Post</title>
+  <title>Emergency Contact QR - Futuristic Blog</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; line-height: 1.6; }
-    h1 { color: #2c3e50; }
-    p { margin-bottom: 20px; }
-    a { color: #2980b9; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    /* Reset & basics */
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #e0e0e0;
+    }
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    main {
+      max-width: 900px;
+      background: rgba(30,30,30,0.9);
+      padding: 40px 50px;
+      border-radius: 20px;
+      box-shadow: 0 0 40px #00f0ff88;
+      backdrop-filter: blur(10px);
+      animation: glowPulse 6s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 40px #00f0ff88; }
+      50% { box-shadow: 0 0 60px #00f0ffbb; }
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      margin-bottom: 20px;
+      text-align: center;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px #00f0ff;
+    }
+    h2 {
+      font-size: 2rem;
+      margin-top: 40px;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #00f0ff;
+      padding-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    p {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      color: #c0dce9;
+    }
+    ul {
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+    ul li {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+    a {
+      color: #00f0ff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #70eaff;
+      text-shadow: 0 0 8px #70eaff;
+    }
+    footer {
+      margin-top: 50px;
+      font-size: 0.9rem;
+      color: #555;
+      text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      main {
+        padding: 25px 20px;
+      }
+      h1 {
+        font-size: 2.4rem;
+      }
+      h2 {
+        font-size: 1.6rem;
+      }
+      p, ul li {
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Welcome to the Emergency Contact QR Blog!</h1>
-  <p>Ye hamara pehla blog post hai jahan hum aapko batayenge emergency contact QR code ke baare mein, iska use kaise karna hai, aur ye aapke liye kaise helpful ho sakta hai.</p>
-  
-  <h2>Emergency Contact QR Code kya hai?</h2>
-  <p>Emergency Contact QR ek simple QR code hota hai jisme aap apne urgent contact details store kar sakte hain, jo emergency mein jaldi access kiya ja sakta hai.</p>
-  
-  <h2>Kaise use karein?</h2>
-  <p>Aap QR code generate kar sakte hain, usse print kar ke apne wallet, phone case ya kisi bhi important jagah chipka sakte hain. Emergency situation mein, koi bhi scanner se ye details dekh sakta hai.</p>
+  <main>
+    <h1>Emergency Contact QR — The Future of Safety & Convenience</h1>
 
-  <h2>Hamari website ke features</h2>
-  <ul>
-    <li>Asaan QR code generation</li>
-    <li>Multiple contacts add karne ki suvidha</li>
-    <li>Mobile-friendly design</li>
-  </ul>
+    <p>Welcome to the forefront of personal safety technology. In today’s fast-paced world, quick access to emergency contacts can save precious seconds and lives. Our <strong>Emergency Contact QR</strong> system is designed to empower you with instant access to vital information — anytime, anywhere.</p>
 
-  <p>Hum aapke feedback ka intezaar kar rahe hain! <a href="mailto:support@itspsr.github.io">Contact us</a> agar aapko koi sawaal ho.</p>
+    <h2>What is an Emergency Contact QR Code?</h2>
+    <p>An Emergency Contact QR code is a specially generated QR code that encodes your important contact details, medical info, or any emergency instructions. When scanned by anyone — paramedics, police, or concerned bystanders — it instantly reveals the information you want shared in emergencies.</p>
+
+    <h2>Why Choose Our Emergency Contact QR?</h2>
+    <ul>
+      <li><strong>Instant Access:</strong> Scan and get details without unlocking your phone or searching contacts.</li>
+      <li><strong>Privacy First:</strong> You control exactly what information to share.</li>
+      <li><strong>Multi-Contact Support:</strong> Add multiple contacts like family, friends, or doctors.</li>
+      <li><strong>Mobile & Print Friendly:</strong> Use digitally or print the QR on cards, badges, or wearables.</li>
+      <li><strong>Customizable Design:</strong> Stylish QR codes that fit your personal style.</li>
+    </ul>
+
+    <h2>How To Use</h2>
+    <p>Simply generate your personalized Emergency Contact QR code from our website, download or print it, and keep it handy. Place it in your wallet, phone case, or anywhere visible. In case of an emergency, anyone with a QR scanner app or smartphone camera can quickly access your details.</p>
+
+    <h2>Technical Excellence Behind The Scenes</h2>
+    <p>Our platform uses the latest web technologies for blazing-fast QR generation with minimal resource use. We use <em>secure, client-side encoding</em> to ensure your data never leaves your device unless you choose to share it.</p>
+
+    <p>The site is fully optimized for all devices — from 4K desktops to small mobile screens — ensuring seamless experience wherever you are.</p>
+
+    <h2>Future Updates</h2>
+    <ul>
+      <li>Integration with emergency services for direct alerts</li>
+      <li>Multi-language support for diverse users</li>
+      <li>AI-powered smart suggestions to optimize your emergency contacts</li>
+      <li>Wearable tech compatibility</li>
+    </ul>
+
+    <p>Stay tuned for regular updates and enhancements!</p>
+
+    <p>If you have questions or suggestions, feel free to <a href="mailto:support@itspsr.github.io">reach out to us</a>. Your safety is our mission.</p>
+
+    <footer>© 2025 Emergency Contact QR. All rights reserved.</footer>
+  </main>
 </body>
 </html>
